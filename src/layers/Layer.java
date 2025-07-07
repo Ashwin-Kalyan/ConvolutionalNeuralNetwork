@@ -11,7 +11,7 @@ public abstract class Layer {
     public abstract double[] getOutput(double[] input);  
 
     public abstract void backPropagation(double[] dLd0);
-    public abstract void backPropagation(List<double[]> dLd0); 
+    public abstract void backPropagation(List<double[][]> dLd0); 
 
     public abstract int getOutputLength();
     public abstract int getOutputRows();
@@ -33,7 +33,7 @@ public abstract class Layer {
     public void setPreviousLayer(Layer previousLayer) {
         this._previousLayer = previousLayer;
     }
-    
+
     public double[] matrixToVector(List<double[][]> input) {
         int length = input.size();
         int rows = input.get(0).length;
@@ -73,6 +73,4 @@ public abstract class Layer {
 
         return out;
     }
-
-
 }
