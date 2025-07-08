@@ -21,7 +21,7 @@ public class NeuralNetwork {
         if (_layers.size() <= 1) return;
 
         for (int i = 0; i < _layers.size(); i++) {
-            if (i == 0) _layers.get(i).setNextLayer(_layers.get(i - 1));
+            if (i == 0) _layers.get(i).setNextLayer(_layers.get(i + 1));
             else if (i == _layers.size() - 1) _layers.get(i).setPreviousLayer(_layers.get(i - 1));
             _layers.get(i).setNextLayer(_layers.get(i + 1));
             _layers.get(i).setPreviousLayer(_layers.get(i - 1));
