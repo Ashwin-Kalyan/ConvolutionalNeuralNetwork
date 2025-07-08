@@ -20,7 +20,7 @@ public  class ConvolutionLayer extends Layer {
 
     private List<double[][]> _lastInput;
 
-    public ConvolutionLayer(List<double[][]> filters, int filterSize, int stepSize, int inLength, int inRows, int inCols, long seed, int numFilters, double learningRate) {
+    public ConvolutionLayer(int filterSize, int stepSize, int inLength, int inRows, int inCols, long seed, int numFilters, double learningRate) {
         this._filterSize = filterSize;
         this._stepSize = stepSize;
         this._learningRate = learningRate;
