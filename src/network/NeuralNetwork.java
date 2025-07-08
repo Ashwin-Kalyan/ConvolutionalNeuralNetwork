@@ -21,10 +21,17 @@ public class NeuralNetwork {
         if (_layers.size() <= 1) return;
 
         for (int i = 0; i < _layers.size(); i++) {
-            if (i == 0) _layers.get(i).setNextLayer(_layers.get(i + 1));
-            else if (i == _layers.size() - 1) _layers.get(i).setPreviousLayer(_layers.get(i - 1));
-            _layers.get(i).setNextLayer(_layers.get(i + 1));
-            _layers.get(i).setPreviousLayer(_layers.get(i - 1));
+            Layer currentLayer = _layers.get(i);
+            
+            // Set previous layer (except for first layer)
+            if (i > 0) {
+                currentLayer.setPreviousLayer(_layers.get(i - 1));
+            }
+            
+            // Set next layer (except for last layer)
+            if (i < _layers.size() - 1) {
+                currentLayer.setNextLayer(_layers.get(i + 1));
+            }
         }
     }
 
