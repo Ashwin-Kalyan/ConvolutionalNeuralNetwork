@@ -115,17 +115,17 @@ public class FullyConnectedLayer extends Layer {
 
     @Override
     public int getOutputRows() {
-        return 0; 
+        return 1; 
     }
 
     @Override
     public int getOutputCols() {
-        return 0; 
+        return 1; 
     }
 
     @Override
     public int getOutputLength() {
-        return 0;
+        return _outLength;
     }
 
     @Override
