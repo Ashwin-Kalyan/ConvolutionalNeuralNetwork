@@ -35,9 +35,15 @@ public class NetworkBuilder {
     }
 
     public void addFullyConnectedLayer(int outLength, double learningRate, long SEED) {
-        if (_layers.isEmpty()) _layers.add(new FullyConnectedLayer(_inputCols * _inputRows, outLength, SEED, learningRate));
-        Layer prev = _layers.get(_layers.size() - 1);
-        _layers.add(new FullyConnectedLayer(prev.getOutputLength(), outLength, SEED, learningRate));
+        if (_layers.isEmpty()) {
+            // For first layer, flatten 28x28 input
+            _layers.add(new FullyConnectedLayer(_inputRows * _inputCols, outLength, SEED, learningRate));
+        } else {
+            Layer prev = _layers.get(_layers.size() - 1);
+            // Flatten previous layer's output
+            int flattenedSize = prev.getOutputLength() * prev.getOutputRows() * prev.getOutputCols();
+            _layers.add(new FullyConnectedLayer(flattenedSize, outLength, SEED, learningRate));
+        }
     }
 
     public NeuralNetwork build() {

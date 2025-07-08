@@ -65,10 +65,23 @@ public class MaxPoolLayer extends Layer {
         return output;
     }
 
-        @Override
+    @Override
     public void backPropagation(double[] dLdO) {
-        List<double[][]> matrixList = vectorToMatrix(dLdO, getOutputLength(), getOutputRows(), getOutputCols());
-        backPropagation(matrixList);
+        // Verify dimensions match expected input
+        int expectedLength = getOutputLength() * getOutputRows() * getOutputCols();
+        if (dLdO.length != expectedLength) {
+            throw new IllegalArgumentException(
+                String.format("Expected %d elements, got %d", expectedLength, dLdO.length)
+            );
+        }
+        
+        List<double[][]> matrixGradients = vectorToMatrix(
+            dLdO, 
+            getOutputLength(),
+            getOutputRows(),
+            getOutputCols()
+        );
+        backPropagation(matrixGradients);
     }
 
     @Override

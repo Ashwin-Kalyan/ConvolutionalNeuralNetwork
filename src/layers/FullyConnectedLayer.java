@@ -50,29 +50,27 @@ public class FullyConnectedLayer extends Layer {
 
     @Override
     public void backPropagation(double[] dLdO) {
-        double dOdz;
-        double dzdw;
-        double dLdw;
-        double dzdx;
         double[] dLdX = new double[_inLength];
-        double dLdX_sum = 0;
-
+        
         for (int k = 0; k < _inLength; k++) {
+            double sum = 0;
             for (int j = 0; j < _outLength; j++) {
-                dOdz = derivativeReLU(lastZ[j]);
-                dzdw = lastX[k];
-                dzdx = _weights[k][j];
-                dLdw = dLdO[j] * dOdz * dzdw;
-
-                _weights[k][j] -= _learningRate * dLdw; // Assuming a learning rate of 0.01
-
-                dLdX_sum += dLdO[j] * dOdz * dzdx;
+                double dOdz = derivativeReLU(lastZ[j]);
+                sum += dLdO[j] * dOdz * _weights[k][j];
             }
-
-            dLdX[k] = dLdX_sum; // Store the accumulated gradient for this input
+            dLdX[k] = sum;
         }
 
-        if (_previousLayer != null ) _previousLayer.backPropagation(dLdX); // Pass the gradient to the previous layer
+        if (_previousLayer != null) {
+            // Convert to matrix form expected by previous conv/pool layers
+            List<double[][]> matrixGradients = vectorToMatrix(
+                dLdX, 
+                _previousLayer.getOutputLength(),
+                _previousLayer.getOutputRows(),
+                _previousLayer.getOutputCols()
+            );
+            _previousLayer.backPropagation(matrixGradients);
+        }
     }
 
     @Override

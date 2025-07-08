@@ -56,11 +56,12 @@ public abstract class Layer {
 
     public List<double[][]> vectorToMatrix(double[] input, int length, int rows, int cols) {
         if (input.length != length * rows * cols) {
-        throw new IllegalArgumentException(
-            String.format("Vector length (%d) != expected dimensions (%d x %d x %d = %d)",
-                input.length, length, rows, cols, length * rows * cols)
-        );
-    }
+            throw new IllegalArgumentException(
+                String.format("Vector length (%d) != expected dimensions (%d x %d x %d = %d)",
+                    input.length, length, rows, cols, length * rows * cols)
+            );
+        }   
+        
         List<double[][]> out = new ArrayList<>();
 
         int i = 0;
